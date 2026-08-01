@@ -1,5 +1,10 @@
 # Corosync QNetd for OpenWrt (ARM64)
 
+> [!NOTE]
+>
+> This is a fork of [jrparks/corosync-qnetd-openwrt](https://github.com/jrparks/corosync-qnetd-openwrt) that updates
+> build system and component versions and fixes Makefiles so build works.
+
 ## Overview
 
 Native OpenWrt build of `corosync-qnetd` and all dependencies, targeting aarch64/musl (OpenWrt 23.05).
@@ -13,13 +18,13 @@ Native OpenWrt build of `corosync-qnetd` and all dependencies, targeting aarch64
 
 ## Packages
 
-```
-corosync-nss-tools_3.0.4-1_aarch64_generic.ipk
-corosync-qnetd_3.0.4-1_aarch64_generic.ipk
-libknet_1.28-1_aarch64_generic.ipk
-libnspr_4.35-1_aarch64_generic.ipk
-libnss_3.98-7_aarch64_generic.ipk
-libqb_2.0.8-1_aarch64_generic.ipk
+```shell
+110K corosync-nss-tools_3.0.4-r1_aarch64_generic.ipk
+ 61K corosync-qnetd_3.0.4-r1_aarch64_generic.ipk
+ 49K libknet_1.35-r1_aarch64_generic.ipk
+121K libnspr_4.39-r1_aarch64_generic.ipk
+1.5M libnss_3.126-r8_aarch64_generic.ipk
+ 65K libqb_2.0.10-r1_aarch64_generic.ipk
 ```
 
 `corosync-nss-tools` provides the NSS certificate setup script and the `corosync-qnetd-certutil` wrapper used by Proxmox during `pvecm qdevice setup`.
