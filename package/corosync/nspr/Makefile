@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nspr
-PKG_VERSION:=4.35
+PKG_VERSION:=4.39
 PKG_RELEASE:=1
 
 PKG_SOURCE:=nspr-$(PKG_VERSION).tar.gz
@@ -13,25 +13,25 @@ PKG_INSTALL:=1
 include $(INCLUDE_DIR)/package.mk
 
 define Package/libnspr
-  SECTION:=libs
-  CATEGORY:=Libraries
-  TITLE:=NSPR
+	SECTION:=libs
+	CATEGORY:=Libraries
+	TITLE:=NSPR
 endef
 
 define Build/Configure
 	(cd $(PKG_BUILD_DIR)/nspr; \
-	 $(CONFIGURE_VARS) \
-	 ./configure $(CONFIGURE_ARGS))
+		$(CONFIGURE_VARS) \
+		./configure $(CONFIGURE_ARGS))
 endef
 
 define Build/Compile
 	# Pre-build host tools with native gcc so they execute on x86_64
 	(cd $(PKG_BUILD_DIR)/nspr/config && \
-	 gcc -o now.o -c -DXP_UNIX now.c && \
-	 gcc -o now now.o && \
-	 gcc -o nsinstall.o -c -DXP_UNIX nsinstall.c && \
-	 gcc -o nsinstall nsinstall.o && \
-	 touch now.o now nsinstall.o nsinstall)
+		gcc -o now.o -c -DXP_UNIX now.c && \
+		gcc -o now now.o && \
+		gcc -o nsinstall.o -c -DXP_UNIX nsinstall.c && \
+		gcc -o nsinstall nsinstall.o && \
+		touch now.o now nsinstall.o nsinstall)
 	$(MAKE_VARS) $(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR)/nspr $(MAKE_FLAGS)
 endef
 

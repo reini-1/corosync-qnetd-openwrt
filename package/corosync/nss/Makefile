@@ -1,11 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nss
-PKG_VERSION:=3.98
+PKG_VERSION:=3.126
+PKG_VERSION_SRC:=NSS_3_126_RTM
 PKG_RELEASE:=8
 
 PKG_SOURCE:=nss-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://archive.mozilla.org/pub/security/nss/releases/NSS_3_98_RTM/src/
+PKG_SOURCE_URL:=https://archive.mozilla.org/pub/security/nss/releases/$(PKG_VERSION_SRC)/src/
 PKG_HASH:=skip
 
 PKG_BUILD_DEPENDS:=nspr
@@ -13,10 +14,10 @@ PKG_BUILD_DEPENDS:=nspr
 include $(INCLUDE_DIR)/package.mk
 
 define Package/libnss
-  SECTION:=libs
-  CATEGORY:=Libraries
-  TITLE:=Mozilla NSS
-  DEPENDS:=+libnspr +zlib
+	SECTION:=libs
+	CATEGORY:=Libraries
+	TITLE:=Mozilla NSS
+	DEPENDS:=+libnspr +zlib
 endef
 
 define Build/Configure

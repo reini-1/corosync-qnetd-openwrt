@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libqb
-PKG_VERSION:=2.0.8
+PKG_VERSION:=2.0.10
 PKG_RELEASE:=1
 
 PKG_SOURCE:=libqb-$(PKG_VERSION).tar.gz
@@ -13,15 +13,15 @@ PKG_INSTALL:=1
 include $(INCLUDE_DIR)/package.mk
 
 define Package/libqb
-  SECTION:=libs
-  CATEGORY:=Libraries
-  TITLE:=libqb
+	SECTION:=libs
+	CATEGORY:=Libraries
+	TITLE:=libqb
 endef
 
 define Build/Configure
 	$(call Build/Configure/Default,, \
-	  libxml_CFLAGS=" " \
-	  libxml_LIBS=" " \
+		libxml_CFLAGS=" " \
+		libxml_LIBS=" " \
 	)
 	sed -i 's/ doxygen2man//' $(PKG_BUILD_DIR)/Makefile
 endef

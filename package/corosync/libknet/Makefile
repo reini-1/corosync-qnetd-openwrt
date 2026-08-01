@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libknet
-PKG_VERSION:=1.28
+PKG_VERSION:=1.35
 PKG_RELEASE:=1
 
 PKG_SOURCE:=v$(PKG_VERSION).tar.gz
@@ -33,13 +33,21 @@ CONFIGURE_ARGS += \
 	--disable-compress-lzma \
 	--disable-libknet-sctp \
 	--disable-libnozzle \
-	--disable-man
+	--disable-man \
+	--disable-wireshark-dissector
+
+define Build/Prepare
+	# Patch configure to not check for sctp header files (disable-libknet-sctp is not enough)
+	$(call Build/Prepare/Default)
+	$(SED) 's|if test "x\$enable_libknet_sctp" = xyes; then|if false; then|' $(PKG_BUILD_DIR)/configure.ac
+	$(SED) 's|AC_MSG_ERROR(\["missing required SCTP headers"\])|:|' $(PKG_BUILD_DIR)/configure.ac
+endef
 
 define Package/libknet
-  SECTION:=libs
-  CATEGORY:=Libraries
-  TITLE:=libknet
-  DEPENDS:=+libqb +libnss
+	SECTION:=libs
+	CATEGORY:=Libraries
+	TITLE:=libknet
+	DEPENDS:=+libqb +libnss
 endef
 
 define Build/InstallDev
