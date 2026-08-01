@@ -37,7 +37,7 @@ CONFIGURE_ARGS += \
 	--disable-wireshark-dissector
 
 define Build/Prepare
-	# Patch configure to not check for sctp header files (disable-libknet-sctp is not enough)
+	# Patch configure to not check for sctp header files (--disable-libknet-sctp does not work)
 	$(call Build/Prepare/Default)
 	$(SED) 's|if test "x\$enable_libknet_sctp" = xyes; then|if false; then|' $(PKG_BUILD_DIR)/configure.ac
 	$(SED) 's|AC_MSG_ERROR(\["missing required SCTP headers"\])|:|' $(PKG_BUILD_DIR)/configure.ac

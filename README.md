@@ -3,7 +3,10 @@
 > [!NOTE]
 >
 > This is a fork of [jrparks/corosync-qnetd-openwrt](https://github.com/jrparks/corosync-qnetd-openwrt) that updates
-> build system and component versions and fixes Makefiles so build works.
+> build system and component versions and fixes Makefiles so build works (e.g. patch libknet configure to really
+> disable libknet-sctp).
+>
+> Ubuntu 26.04 is used as docker build image.
 
 ## Overview
 
@@ -23,7 +26,7 @@ Native OpenWrt build of `corosync-qnetd` and all dependencies, targeting aarch64
  61K corosync-qnetd_3.0.4-r1_aarch64_generic.ipk
  49K libknet_1.35-r1_aarch64_generic.ipk
 121K libnspr_4.39-r1_aarch64_generic.ipk
-1.5M libnss_3.126-r8_aarch64_generic.ipk
+1.5M libnss_3.126-r1_aarch64_generic.ipk
  65K libqb_2.0.10-r1_aarch64_generic.ipk
 ```
 
