@@ -10,7 +10,7 @@
 
 ## Overview
 
-Native OpenWrt build of `corosync-qnetd` and all dependencies, targeting aarch64/musl (OpenWrt 23.05).
+Native OpenWrt build of `corosync-qnetd` and all dependencies, targeting aarch64/musl (OpenWrt 24.10.8).
 
 - musl-native, no glibc
 - Automatic NSS certificate setup
