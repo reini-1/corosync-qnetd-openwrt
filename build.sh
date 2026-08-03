@@ -10,10 +10,17 @@ cp -r /build/package/* ${SDK_DIR}/package/
 
 cd ${SDK_DIR}
 
-cat <<EOF > .config
-CONFIG_TARGET_armsr=y
-CONFIG_TARGET_armsr_armv8=y
+# cat <<EOF > .config
+# CONFIG_TARGET_armsr=y
+# CONFIG_TARGET_armsr_armv8=y
+# EOF
 
+cat <<EOF > .config
+CONFIG_TARGET_mediatek=y
+CONFIG_TARGET_mediatek_filogic=y
+EOF
+
+cat <<EOF >> .config
 CONFIG_PACKAGE_libqb=m
 CONFIG_PACKAGE_libknet=m
 CONFIG_PACKAGE_libnspr=m
@@ -37,7 +44,9 @@ find bin/packages -name "*.ipk" -exec cp {} ${OUTPUT_DIR}/ \;
 
 # Repack ipks: change Architecture field to match the GL.iNet router's arch string.
 # The binaries are identical — this is purely a metadata fix so opkg accepts them.
-ROUTER_ARCH="aarch64_cortex-a53_neon-vfpv4"
+
+# ROUTER_ARCH="aarch64_cortex-a53_neon-vfpv4"
+ROUTER_ARCH="aarch64_cortex-a53"
 for ipk in ${OUTPUT_DIR}/*.ipk; do
     tmpdir=$(mktemp -d)
     (

@@ -7,6 +7,10 @@
 > disable libknet-sctp).
 >
 > Ubuntu 26.04 is used as docker build image.
+>
+> Build for [Gl.Inet MT6000 Flint 2](https://openwrt.org/toh/gl.inet/gl-mt6000) (mediatek/filogic, aarch64_cortex-a53)
+> for OpenWrt 24.10.2.
+> See Dockerfile & build.sh to modify this for your needed chipset/architecture.
 
 ## Overview
 
@@ -69,6 +73,7 @@ opkg install --nodeps --force-reinstall \
 `--nodeps` skips resolution for system libraries (`libc`, `zlib`) already present on the router. The packages are built as `aarch64_generic` and repacked at build time with the GL.iNet firmware arch string (`aarch64_cortex-a53_neon-vfpv4`) — the binaries are fully compatible.
 
 `--force-reinstall` ensures packages are installed even if a previous version is already present. The `corosync-nss-tools` postinst runs `corosync-qnetd-setup`, which generates NSS integrity check files (`.chk`) via `shlibsign`, initialises the NSS certificate database, and starts the service. The firewall step is skipped at install time — run it manually after (see Post-Install Setup below).
+Maybe `--force-overwrite` has also be given if you have something else that installs /usr/lib/libsqlite3.so (need to be fixed...)
 
 ---
 
@@ -142,10 +147,20 @@ netstat -tlnp | grep 5403
 
 ## Proxmox Integration
 
-Install `openssh-sftp-server` on the router first (required for `pvecm` to SCP files):
+Install `openssh-sftp-server` and maybe switch from `dropbear` to `openssl-server` on the router first
+(required for `pvecm` to SCP files and add new created id_rsa.pub to router root with ssh-copy-id):
 
 ```bash
 opkg install openssh-sftp-server
+```
+
+On all nodes:
+
+`corosync-qdevice` is needed on all proxmox nodes. `pvecm qdevice setup` uses `/usr/sbin/corosync-qdevice-net-certutil`
+to manage certificates for corosync. On the router `corosync-qnetd-certutil` is used.
+
+```bash
+apt install corosync-qdevice
 ```
 
 Then on one Proxmox node:
@@ -166,10 +181,10 @@ pvecm qdevice setup <router-ip> --force
 
 ## Notes
 
-- Built for OpenWrt 23.05.3 armsr/armv8 (aarch64 musl)
 - Uses Mozilla NSS for TLS — no OpenSSL dependency
 - `corosync-qnetd` source: [corosync/corosync-qdevice](https://github.com/corosync/corosync-qdevice)
 - `sdk-state/` is gitignored and holds cached build artifacts between runs
+- `output/` is gitignored and holds the built packages.
 
 ---
 
